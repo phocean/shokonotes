@@ -52,7 +52,7 @@ No AI writing in your notes. No cloud of ours. No account. No subscription.
 
 ## Get Shokonotes
 
-**Mac and iPhone: one purchase on the App Store.** Buy Shokonotes once and you get both apps. [Mac App Store](https://example.invalid/TODO-mas) · [App Store for iPhone](https://example.invalid/TODO-ios)
+**Mac and iPhone: one purchase on the App Store.** Buy Shokonotes once and you get both apps. [Get it on the App Store](https://apps.apple.com/app/id6816433175)
 
 **Or build it yourself.** Shokonotes is free software under the GPLv3: the full source is here, and [Building from source](#building-from-source) takes a few minutes with Xcode.
 
