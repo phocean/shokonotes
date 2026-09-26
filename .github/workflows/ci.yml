@@ -2,14 +2,18 @@ name: CI
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   pull_request:
 
 jobs:
   build:
-    runs-on: macos-15
+    # The app icon is an Icon Composer `.icon`, which needs Xcode 26.
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
+
+      - name: Show Xcode version
+        run: xcodebuild -version
 
       - name: Install XcodeGen
         run: brew install xcodegen
@@ -17,10 +21,16 @@ jobs:
       - name: Generate Xcode project
         run: xcodegen generate
 
-      - name: Build Release
+      - name: Build Mac app
         run: |
           xcodebuild -project Shokonotes.xcodeproj -scheme Shokonotes \
             -configuration Release -destination 'platform=macOS' \
+            CODE_SIGNING_ALLOWED=NO build
+
+      - name: Build iPhone app
+        run: |
+          xcodebuild -project Shokonotes.xcodeproj -scheme ShokonotesIOS \
+            -configuration Debug -destination 'generic/platform=iOS Simulator' \
             CODE_SIGNING_ALLOWED=NO build
 
       - name: Test
