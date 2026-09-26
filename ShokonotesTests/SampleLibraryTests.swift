@@ -56,6 +56,17 @@ final class SampleLibraryTests: XCTestCase {
         return nil
     }
 
+    /// App Store Connect rejects the Mac package when bundled paths are not
+    /// ASCII (see `SampleLibrary.decodeNames`). Every name stays encoded.
+    func testBundledSamplePathsAreASCII() throws {
+        let root = Self.fixture("en").deletingLastPathComponent()
+        let enumerator = try XCTUnwrap(FileManager.default.enumerator(at: root, includingPropertiesForKeys: nil))
+        let offenders = enumerator.compactMap { $0 as? URL }
+            .map(\.lastPathComponent)
+            .filter { !$0.allSatisfy(\.isASCII) }
+        XCTAssertEqual(offenders, [])
+    }
+
     func testDefaultDestinationLivesInApplicationSupport() {
         let url = SampleLibrary.defaultDestinationURL()
         XCTAssertEqual(url.lastPathComponent, "Sample Library-en")

@@ -62,7 +62,29 @@ enum SampleLibrary {
             try fileManager.removeItem(at: destination)
         }
         try fileManager.copyItem(at: source, to: destination)
+        try decodeNames(in: destination, fileManager: fileManager)
         try installSharedImages(from: source, into: destination, fileManager: fileManager)
+    }
+
+    /// The bundle stores every non-ASCII file and folder name percent-encoded
+    /// (`%EB%A9%94%EB%AA%A8.md` for `메모.md`). App Store Connect rejects a Mac
+    /// package whose paths mix Unicode normalization forms, and Xcode's resource
+    /// copy writes folder names decomposed while leaving file names composed.
+    /// ASCII in the bundle sidesteps it; the user's copy gets the real names.
+    /// Deepest paths first, so a folder is renamed after its contents.
+    private static func decodeNames(in root: URL, fileManager: FileManager) throws {
+        guard let enumerator = fileManager.enumerator(at: root, includingPropertiesForKeys: nil) else {
+            return
+        }
+        let items = enumerator.compactMap { $0 as? URL }
+            .sorted { $0.pathComponents.count > $1.pathComponents.count }
+        for item in items {
+            let name = item.lastPathComponent
+            guard name.contains("%"), let decoded = name.removingPercentEncoding, decoded != name else {
+                continue
+            }
+            try fileManager.moveItem(at: item, to: item.deletingLastPathComponent().appendingPathComponent(decoded))
+        }
     }
 
     /// Preview images live once under `SampleLibrary/_shared`, not in every locale tree.

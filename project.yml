@@ -50,7 +50,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.jcbaptiste.shokonotes
         PRODUCT_NAME: Shokonotes
         MARKETING_VERSION: "1.0.4"
-        CURRENT_PROJECT_VERSION: "5"
+        CURRENT_PROJECT_VERSION: "6"
         GENERATE_INFOPLIST_FILE: false
         INFOPLIST_FILE: Shokonotes/Resources/Info.plist
         CODE_SIGN_ENTITLEMENTS: Shokonotes/Resources/Shokonotes.entitlements
@@ -128,7 +128,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.jcbaptiste.shokonotes
         PRODUCT_NAME: Shokonotes
         MARKETING_VERSION: "1.0.4"
-        CURRENT_PROJECT_VERSION: "5"
+        CURRENT_PROJECT_VERSION: "6"
         GENERATE_INFOPLIST_FILE: true
         INFOPLIST_FILE: ShokonotesiOS/Info.plist
         INFOPLIST_KEY_CFBundleDisplayName: Shokonotes
@@ -186,7 +186,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.jcbaptiste.shokonotes.share
         PRODUCT_NAME: ShokonotesShare
         MARKETING_VERSION: "1.0.4"
-        CURRENT_PROJECT_VERSION: "5"
+        CURRENT_PROJECT_VERSION: "6"
         GENERATE_INFOPLIST_FILE: true
         INFOPLIST_FILE: ShokonotesShare/Info.plist
         INFOPLIST_KEY_CFBundleDisplayName: Shokonotes
