@@ -2,6 +2,8 @@
 
 **Your notes are files. Shokonotes is what you use to find them.**
 
+![The Shokonotes library on the Mac: sidebar, note list and preview](assets/readme/mac-library.png)
+
 ## Genesis
 
 For years I looked for a note-taking app I could settle into. The choice is wide, and I spent real time with most of them. Every one failed me on at least one point:
@@ -26,6 +28,8 @@ I designed Shokonotes; the code was written with their help.
 
 **Your library, your editor.** In the current version, editing on the Mac happens in an external editor. Shokonotes opens the one you choose — Typora, VS Code, Sublime Text, Neovim, TextEdit — and picks up your changes when you save. You can keep your writing habits while using Shokonotes to find, read and organise your notes.
 
+<p align="center"><img src="assets/readme/mac-editor.png" width="560" alt="A note opened in Typora from Shokonotes, front matter and code block included"></p>
+
 **Capture first, file later.** A global shortcut (Control-Option-Command-N by default) creates a note in **Inbox** and opens your editor, without bringing the library window forward or losing what you were reading. The thought lands; sorting is a separate moment, on your terms. It is the GTD inbox, applied to notes.
 
 **Search that answers while you type.** Full text, across the whole library.
@@ -35,6 +39,12 @@ I designed Shokonotes; the code was written with their help.
 **Native, and only native.** SwiftUI and AppKit, one sandboxed binary, macOS 14+. It behaves like a Mac application because it is one.
 
 **The phone is not the Mac.** On iPhone you look things up and you catch a line before it escapes. Search, read, capture to Inbox, share a page from Safari. Filing a library is desk work, and the iPhone app does not pretend otherwise.
+
+<p align="center">
+  <img src="assets/readme/ios-library.png" width="220" alt="The library on iPhone">
+  <img src="assets/readme/ios-note.png" width="220" alt="A note read on iPhone">
+  <img src="assets/readme/ios-share.png" width="220" alt="A web page shared from Safari into the Inbox">
+</p>
 
 ## What Shokonotes will never do
 
@@ -88,6 +98,11 @@ Typora is offered as a default when it is installed; any editor does. Notes can 
 
 Tag suggestions are counting, not a model: Shokonotes only ever proposes tags you already use, based on how you have used them. No network, no learning, and it never speaks first.
 
+<p align="center">
+  <img src="assets/readme/mac-tags.png" width="420" alt="Tagging a note with the tags you already use">
+  <img src="assets/readme/mac-code.png" width="420" alt="Preview with syntax highlighting">
+</p>
+
 ### On the iPhone
 
 The iPhone app opens **the same folder, provided it lives in iCloud Drive**. You pick it once through the Files app.
@@ -98,6 +113,8 @@ It is built for looking things up and catching a line: search, read, capture to 
 
 Capture creates a new note: one field, no toolbar, no preview. Editing existing notes is not available on the phone in the current version.
 
+<p align="center"><img src="assets/readme/ios-search.png" width="220" alt="Full-text search on iPhone"></p>
+
 ### Rendering
 
 Preview is GitHub Flavored Markdown, rendered on the device with [cmark-gfm](https://github.com/swiftlang/swift-cmark), with syntax highlighting. Nothing is sent anywhere: the Mac app is sandboxed without any network entitlement, so macOS itself guarantees it cannot reach the network.
@@ -107,6 +124,25 @@ macOS 14+ or iOS 17+  : one sandboxed binary per platform.
 ### Languages
 
 Shokonotes follows the language of your Mac or iPhone. It currently speaks English, French, German, Spanish, Italian, Japanese, Korean, Brazilian Portuguese, Russian and Simplified Chinese. Menus that belong to the system (Share, print, the Dock) keep Apple’s own wording in that language.
+
+<table>
+  <tr>
+    <td><img src="assets/readme/lang-fr.png" alt="Shokonotes in French"></td>
+    <td><img src="assets/readme/lang-ja.png" alt="Shokonotes in Japanese"></td>
+  </tr>
+  <tr>
+    <td align="center">Français</td>
+    <td align="center">日本語</td>
+  </tr>
+  <tr>
+    <td><img src="assets/readme/lang-ru.png" alt="Shokonotes in Russian"></td>
+    <td><img src="assets/readme/lang-ko.png" alt="Shokonotes in Korean"></td>
+  </tr>
+  <tr>
+    <td align="center">Русский</td>
+    <td align="center">한국어</td>
+  </tr>
+</table>
 
 ---
 
