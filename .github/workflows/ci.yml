@@ -1,19 +1,26 @@
 name: CI
 
-# Manual only for now: the hosted macos-26 runner fails at "Build Mac app"
-# (log not yet read). Run it from the Actions tab once that is fixed.
+# Manual only until a run passes with the newest Xcode (see "Select newest
+# Xcode"). Then put back `push: branches: [main]` and `pull_request:`.
 on:
   workflow_dispatch:
 
 jobs:
   build:
-    # The app icon is an Icon Composer `.icon`, which needs Xcode 26.
+    # The app icon is an Icon Composer `.icon`, which needs Xcode 26 or later.
     runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
 
-      - name: Show Xcode version
-        run: xcodebuild -version
+      # The image's default Xcode (26.6 on 2026-09-26) crashes clang on
+      # swift-cmark's map.c. Use the newest non-beta Xcode on the runner; the
+      # App Store builds are made with Xcode 27.
+      - name: Select newest Xcode
+        run: |
+          ls -d /Applications/Xcode*.app
+          XCODE=$(ls -d /Applications/Xcode_*.app | grep -vi beta | sort -V | tail -1)
+          sudo xcode-select -s "$XCODE/Contents/Developer"
+          xcodebuild -version
 
       - name: Install XcodeGen
         run: brew install xcodegen
