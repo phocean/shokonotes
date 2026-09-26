@@ -1,4 +1,4 @@
-.PHONY: project build test install clean ios install-ios
+.PHONY: project build test install clean ios install-ios archive export upload
 
 PROJECT := Shokonotes.xcodeproj
 SCHEME := Shokonotes
@@ -52,6 +52,35 @@ install-ios: project
 	xcrun devicectl device install app --device $(IOS_DEVICE) "$(IOS_APP)"
 	xcrun devicectl device process launch --device $(IOS_DEVICE) $(IOS_BUNDLE) \
 		|| echo "Installed. Unlock the iPhone and tap Shokonotes if it did not open."
+
+# App Store builds, Mac and iPhone, signed by the team in the keychain.
+# `make export` leaves the .pkg and .ipa in $(DIST) for inspection;
+# `make upload` sends both to App Store Connect.
+ARCHIVES := /tmp/shokonotes-archives
+DIST := /tmp/shokonotes-dist
+
+archive: project
+	@test -n "$(IOS_TEAM)" || { echo "No Apple Development team in the keychain."; exit 1; }
+	rm -rf $(ARCHIVES)
+	xcodebuild -project $(PROJECT) -scheme $(SCHEME) -configuration Release \
+		-destination 'generic/platform=macOS' -archivePath $(ARCHIVES)/mac.xcarchive \
+		-allowProvisioningUpdates DEVELOPMENT_TEAM=$(IOS_TEAM) archive
+	xcodebuild -project $(PROJECT) -scheme $(IOS_SCHEME) -configuration Release \
+		-destination 'generic/platform=iOS' -archivePath $(ARCHIVES)/ios.xcarchive \
+		-allowProvisioningUpdates DEVELOPMENT_TEAM=$(IOS_TEAM) archive
+
+export: archive
+	rm -rf $(DIST)
+	xcodebuild -exportArchive -archivePath $(ARCHIVES)/mac.xcarchive \
+		-exportOptionsPlist Release/export.plist -exportPath $(DIST)/mac -allowProvisioningUpdates
+	xcodebuild -exportArchive -archivePath $(ARCHIVES)/ios.xcarchive \
+		-exportOptionsPlist Release/export.plist -exportPath $(DIST)/ios -allowProvisioningUpdates
+
+upload:
+	xcodebuild -exportArchive -archivePath $(ARCHIVES)/mac.xcarchive \
+		-exportOptionsPlist Release/upload.plist -exportPath $(DIST)/upload-mac -allowProvisioningUpdates
+	xcodebuild -exportArchive -archivePath $(ARCHIVES)/ios.xcarchive \
+		-exportOptionsPlist Release/upload.plist -exportPath $(DIST)/upload-ios -allowProvisioningUpdates
 
 clean:
 	rm -rf $(DERIVED) $(IOS_DERIVED) Shokonotes.xcodeproj
