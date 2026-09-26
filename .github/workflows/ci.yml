@@ -1,9 +1,9 @@
 name: CI
 
+# Manual only for now: the hosted macos-26 runner fails at "Build Mac app"
+# (log not yet read). Run it from the Actions tab once that is fixed.
 on:
-  push:
-    branches: [main]
-  pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
