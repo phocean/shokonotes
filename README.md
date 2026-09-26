@@ -38,21 +38,19 @@ I designed Shokonotes; the code was written with their help.
 
 ## What Shokonotes will never do
 
-No AI writing in your notes. No cloud of ours. No account. No subscription on the Mac app.
+No AI writing in your notes. No cloud of ours. No account. No subscription.
 
 ## Get Shokonotes
 
-**Mac.** [Download the latest release](https://example.invalid/TODO-releases) (free) or buy it on the [Mac App Store](https://example.invalid/TODO-mas) for €X if you would rather have automatic updates, or want to support the work. Same app, same features: the App Store version is a way to pay me, not a way to unlock anything.
+**Mac and iPhone: one purchase on the App Store.** Buy Shokonotes once and you get both apps. [Mac App Store](https://example.invalid/TODO-mas) · [App Store for iPhone](https://example.invalid/TODO-ios)
 
-**iPhone.** [App Store](https://example.invalid/TODO-ios)
-
-The App Store is the only way to install an app on iOS, so there is no free channel to offer you here.
+**Or build it yourself.** Shokonotes is free software under the GPLv3: the full source is here, and [Building from source](#building-from-source) takes a few minutes with Xcode.
 
 Shokonotes is one person's work, paid for out of pocket — the Apple developer account, the AI agents that wrote the code, and the evenings. If it earns a place in your day, buying it is what keeps it maintained.
 
 ## Feedback
 
-Shokonotes is shaped by use, and yours counts. Bug reports, rough edges, confusing wording and feature suggestions are all welcome: [open an issue](https://example.invalid/TODO-issues).
+Shokonotes is shaped by use, and yours counts. Bug reports, rough edges, confusing wording and feature suggestions are all welcome: [open an issue](https://github.com/phocean/shokonotes/issues).
 
 Two things worth knowing before you write. It is one person answering, so give me a few days. And "do few things, do them well" means some suggestions will get a friendly no — that is not dismissal, it is the reason the app stays small enough to be good at what it does.
 
@@ -114,7 +112,7 @@ Shokonotes follows the language of your Mac or iPhone. It currently speaks Engli
 
 ## Building from source
 
-Xcode 16 or later (Icon Composer `.icon` bundles) and [XcodeGen](https://github.com/yonaskolb/XcodeGen).
+Xcode 26 or later (the app icon is an Icon Composer `.icon` bundle) and [XcodeGen](https://github.com/yonaskolb/XcodeGen).
 
 ```bash
 brew install xcodegen

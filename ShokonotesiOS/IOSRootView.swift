@@ -11,9 +11,10 @@ struct IOSRootView: View {
             if session.needsRestore {
                 LibraryOpeningView()
             } else if library.rootURL == nil {
-                FolderOnboardingView {
-                    session.isPickingFolder = true
-                }
+                FolderOnboardingView(
+                    onChoose: { session.isPickingFolder = true },
+                    onOpenSample: { library.openSampleLibrary() }
+                )
                 .shokoFolderImporter(session: session)
             } else {
                 LibraryListView(session: session, library: library)
@@ -89,6 +90,7 @@ struct LibraryOpeningView: View {
 
 struct FolderOnboardingView: View {
     var onChoose: () -> Void
+    var onOpenSample: () -> Void
 
     var body: some View {
         VStack(spacing: 16) {
@@ -111,6 +113,8 @@ struct FolderOnboardingView: View {
             .controlSize(.large)
             .padding(.horizontal, 32)
             .padding(.top, 8)
+            Button("Open Sample Library", action: onOpenSample)
+                .controlSize(.large)
             Spacer()
         }
     }
