@@ -1,0 +1,136 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "NSMicrophoneUsageDescription": {
+      "comment": "System permission alert shown the first time the user dictates into the iOS search field. Full sentence, neutral register. \"Shokonotes\" is the app name and is never translated.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes verwendet das Mikrofon, damit Sie Suchtext diktieren können, statt ihn einzutippen."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes uses the microphone so you can dictate search text instead of typing it."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes usa el micrófono para que puedas dictar el texto de búsqueda en lugar de escribirlo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes utilise le microphone pour que vous puissiez dicter votre recherche au lieu de la saisir."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes usa il microfono per consentirti di dettare il testo di ricerca invece di digitarlo."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes は、検索テキストを入力する代わりに音声で読み上げて入力できるようにマイクを使用します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes는 검색어를 직접 입력하는 대신 받아쓸 수 있도록 마이크를 사용합니다."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Shokonotes usa o microfone para que você possa ditar o texto de busca em vez de digitá-lo."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes использует микрофон, чтобы вы могли диктовать поисковый запрос вместо ввода с клавиатуры."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes 使用麦克风，让您可以口述搜索内容，而无需键入。"
+          }
+        }
+      }
+    },
+    "NSSpeechRecognitionUsageDescription": {
+      "comment": "System permission alert shown the first time the user dictates into the iOS search field. Full sentence, neutral register. \"Shokonotes\" is the app name and is never translated.",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes verwendet Spracherkennung auf dem Gerät, um Ihr Diktat in Suchtext umzuwandeln."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes uses on-device speech recognition to turn your dictation into search text."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes usa el reconocimiento de voz en el dispositivo para convertir tu dictado en texto de búsqueda."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes utilise la reconnaissance vocale sur l’appareil pour transformer votre dictée en texte de recherche."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes usa il riconoscimento vocale sul dispositivo per trasformare la tua dettatura in testo di ricerca."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes は、デバイス上の音声認識を使用して、読み上げた内容を検索テキストに変換します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes는 기기 내 음성 인식을 사용하여 받아쓴 내용을 검색어로 변환합니다."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Shokonotes usa o reconhecimento de fala no dispositivo para transformar o que você dita em texto de busca."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes использует распознавание речи на устройстве, чтобы преобразовать вашу диктовку в поисковый запрос."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shokonotes 使用设备端语音识别，将您口述的内容转换为搜索文本。"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

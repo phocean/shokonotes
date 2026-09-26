@@ -1,0 +1,208 @@
+name: Shokonotes
+options:
+  bundleIdPrefix: com.jcbaptiste
+  deploymentTarget:
+    macOS: "14.0"
+    iOS: "17.0"
+  createIntermediateGroups: true
+  developmentLanguage: en
+  # The project's languages. XcodeGen has no `knownRegions` spec option — it
+  # derives the list from the `.lproj` folders it finds, and a String Catalog
+  # has none, so it would only ever write `Base, en`. Without the full list
+  # Xcode's String Catalog editor offers no column for a language, and adding
+  # one from that editor writes `knownRegions` into the generated (gitignored)
+  # project, which the next `make project` throws away. So the list is patched
+  # in here, once, after generation. `en` is the source language; the others
+  # ship in the String Catalog. Sorted as Xcode sorts them, variants quoted
+  # (`pt-BR`, `zh-Hans`); Xcode rewrites the line in its own layout when it saves.
+  postGenCommand: |
+    python3 -c 'import pathlib, re; p = pathlib.Path("Shokonotes.xcodeproj/project.pbxproj"); t = p.read_text(); n, c = re.subn(r"knownRegions = \([^)]*\);", "knownRegions = (Base, de, en, es, fr, it, ja, ko, \"pt-BR\", ru, \"zh-Hans\", );", t); p.write_text(n); raise SystemExit(0 if c == 1 else "project.yml postGenCommand: knownRegions not found in the generated project")'
+packages:
+  cmark-gfm:
+    url: https://github.com/swiftlang/swift-cmark.git
+    revision: 7898f1b3e4befeecee56cb4a3bc8eebd2cb63219
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    CLANG_CXX_LANGUAGE_STANDARD: "gnu++17"
+targets:
+  Shokonotes:
+    type: application
+    platform: macOS
+    sources:
+      - path: Shokonotes
+        excludes:
+          - Resources/**
+      - path: Shokonotes/Resources/modern.icon
+      - path: Shokonotes/Resources/Localizable.xcstrings
+        buildPhase: resources
+      - path: Shokonotes/Resources/PrivacyInfo.xcprivacy
+        buildPhase: resources
+      - path: Shokonotes/Resources/Preview
+        type: folder
+        buildPhase: resources
+      - path: Shokonotes/Resources/SampleLibrary
+        type: folder
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.jcbaptiste.shokonotes
+        PRODUCT_NAME: Shokonotes
+        MARKETING_VERSION: "1.0.3"
+        CURRENT_PROJECT_VERSION: "4"
+        GENERATE_INFOPLIST_FILE: false
+        INFOPLIST_FILE: Shokonotes/Resources/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Shokonotes/Resources/Shokonotes.entitlements
+        CODE_SIGN_STYLE: Automatic
+        ENABLE_HARDENED_RUNTIME: true
+        ENABLE_APP_SANDBOX: true
+        COMBINE_HIDPI_IMAGES: true
+        ASSETCATALOG_COMPILER_APPICON_NAME: modern
+        INFOPLIST_KEY_CFBundleIconName: modern
+        ENABLE_TESTABILITY: true
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/../Frameworks"
+        OTHER_CODE_SIGN_FLAGS: "--deep"
+      configs:
+        debug:
+          SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+    dependencies:
+      - package: cmark-gfm
+        product: cmark-gfm
+      - package: cmark-gfm
+        product: cmark-gfm-extensions
+    scheme:
+      testTargets:
+        - ShokonotesTests
+  ShokonotesTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - ShokonotesTests
+    dependencies:
+      - target: Shokonotes
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.jcbaptiste.shokonotes.tests
+        GENERATE_INFOPLIST_FILE: true
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Shokonotes.app/Contents/MacOS/Shokonotes"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks"
+        CODE_SIGNING_ALLOWED: false
+  ShokonotesIOS:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: ShokonotesiOS
+        excludes:
+          - Info.plist
+          - InfoPlist.xcstrings
+          - "*.entitlements"
+      # Info.plist is not covered by the app's String Catalog: it is a separate
+      # mechanism. This second catalog localizes the two permission alerts
+      # (microphone, speech recognition) and compiles to InfoPlist.strings per
+      # language in the bundle. Info.plist keeps the English values as fallback.
+      - path: ShokonotesiOS/InfoPlist.xcstrings
+        buildPhase: resources
+      - path: Shokonotes/Library
+      - path: Shokonotes/Actions/FolderActions.swift
+      - path: Shokonotes/Preview/MarkdownRenderer.swift
+      - path: Shokonotes/Preview/PreviewCSS.swift
+      - path: Shokonotes/Preview/PreviewAssetCache.swift
+      - path: Shokonotes/Preview/PreviewImageRendition.swift
+      - path: Shokonotes/Resources/modern.icon
+      - path: Shokonotes/Resources/Localizable.xcstrings
+        buildPhase: resources
+      - path: Shokonotes/Resources/PrivacyInfo.xcprivacy
+        buildPhase: resources
+      - path: Shokonotes/Resources/Preview
+        type: folder
+        buildPhase: resources
+      - path: Shokonotes/Resources/SampleLibrary
+        type: folder
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.jcbaptiste.shokonotes
+        PRODUCT_NAME: Shokonotes
+        MARKETING_VERSION: "1.0.3"
+        CURRENT_PROJECT_VERSION: "4"
+        GENERATE_INFOPLIST_FILE: true
+        INFOPLIST_FILE: ShokonotesiOS/Info.plist
+        INFOPLIST_KEY_CFBundleDisplayName: Shokonotes
+        INFOPLIST_KEY_CFBundleIconName: modern
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.productivity
+        INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace: true
+        INFOPLIST_KEY_UILaunchScreen_Generation: true
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+        ASSETCATALOG_COMPILER_APPICON_NAME: modern
+        CODE_SIGN_STYLE: Automatic
+        TARGETED_DEVICE_FAMILY: "1"
+        IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+        SUPPORTS_MACCATALYST: false
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: false
+        ENABLE_TESTABILITY: true
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks"
+        CODE_SIGN_ENTITLEMENTS: ShokonotesiOS/ShokonotesIOS.entitlements
+      configs:
+        debug:
+          SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+    dependencies:
+      - package: cmark-gfm
+        product: cmark-gfm
+      - package: cmark-gfm
+        product: cmark-gfm-extensions
+      - target: ShokonotesShare
+        embed: true
+        codeSign: true
+    scheme: {}
+  ShokonotesShare:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: ShokonotesShare
+        excludes:
+          - Info.plist
+          - "*.entitlements"
+      - path: Shokonotes/Library
+        includes:
+          - InboxCapture.swift
+          - BookmarkStore.swift
+          - FrontMatter.swift
+          - LibraryError.swift
+          - AppGroup.swift
+      - path: ShokonotesiOS/InboxHandoff.swift
+      - path: Shokonotes/Resources/Localizable.xcstrings
+        buildPhase: resources
+      - path: Shokonotes/Resources/modern.icon
+      - path: Shokonotes/Resources/PrivacyInfo.xcprivacy
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.jcbaptiste.shokonotes.share
+        PRODUCT_NAME: ShokonotesShare
+        MARKETING_VERSION: "1.0.3"
+        CURRENT_PROJECT_VERSION: "4"
+        GENERATE_INFOPLIST_FILE: true
+        INFOPLIST_FILE: ShokonotesShare/Info.plist
+        INFOPLIST_KEY_CFBundleDisplayName: Shokonotes
+        INFOPLIST_KEY_CFBundleIconName: modern
+        ASSETCATALOG_COMPILER_APPICON_NAME: modern
+        CODE_SIGN_ENTITLEMENTS: ShokonotesShare/ShokonotesShare.entitlements
+        CODE_SIGN_STYLE: Automatic
+        TARGETED_DEVICE_FAMILY: "1"
+        IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+        SUPPORTS_MACCATALYST: false
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: false
+        SKIP_INSTALL: YES
+        APPLICATION_EXTENSION_API_ONLY: true
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"
+      configs:
+        debug:
+          SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+    scheme: {}

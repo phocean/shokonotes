@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+	</dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Shokonotes uses the microphone so you can dictate search text instead of typing it.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Shokonotes uses on-device speech recognition to turn your dictation into search text.</string>
+	<key>UILaunchScreen</key>
+	<dict/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.jcbaptiste.shokonotes</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>shokonotes</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

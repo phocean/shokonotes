@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#3a3128" flood-opacity="0.40"/>
+    </filter>
+    <filter id="folderShadow" x="-25%" y="-25%" width="150%" height="160%">
+      <feDropShadow dx="0" dy="7" stdDeviation="5" flood-color="#17140F" flood-opacity="0.50"/>
+    </filter>
+  </defs>
+
+  <!-- tuile bicolore plein bord : le systeme applique son propre masque -->
+  <rect x="0" y="0" width="512" height="1024" fill="#F0E9DB"/>
+  <rect x="512" y="0" width="512" height="1024" fill="#6E6860"/>
+
+  <!-- carte -->
+  <g filter="url(#cardShadow)">
+    <rect x="138.3" y="157.0" width="740.0" height="448.4" rx="42" ry="42"
+          fill="#F7F1E5" stroke="#2A2620" stroke-opacity="0.22" stroke-width="2.5"/>
+  </g>
+  <g stroke="#14120E" stroke-width="12" stroke-linecap="round">
+    <line x1="225.0" y1="293.7" x2="788.6" y2="293.7"/>
+    <line x1="225.0" y1="392.4" x2="788.6" y2="392.4"/>
+    <line x1="225.0" y1="489.6" x2="788.6" y2="489.6"/>
+  </g>
+
+  <!-- dossier : onglet a gauche, corps en dessous -->
+  <g filter="url(#folderShadow)">
+    <path d="M 558.4 680.2
+             a 15 15 0 0 1 15 -15 h 83.6 a 15 15 0 0 1 15 15
+             v 15
+             h 179.3 a 15 15 0 0 1 15 15
+             v 179.2 a 15 15 0 0 1 -15 15
+             h -292.9 a 15 15 0 0 1 -15 -15 z"
+          fill="#F7F1E5" stroke="#17140F" stroke-opacity="0.28" stroke-width="2.5"/>
+  </g>
+
+  <!-- fleche en zigzag : contour ferme -->
+  <path d="M 161.0 805.7 L 214.5 759.8 L 269.5 865.0 L 340.2 779.6 L 411.9 778.9 L 411.9 817.8 L 467.2 769.2 L 411.9 720.6 L 411.9 759.5 L 331.0 760.2 L 273.1 830.2 L 220.5 729.2 L 148.4 790.9 A 9.7 9.7 0 0 0 161.0 805.7 Z" fill="#F0E9DB" stroke="#14120E" stroke-width="5.5" stroke-linejoin="round"/>
+</svg>
