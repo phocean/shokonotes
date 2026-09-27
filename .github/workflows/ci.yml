@@ -1,7 +1,7 @@
 name: CI
 
-# Manual only until a run passes with the newest Xcode (see "Select newest
-# Xcode"). Then put back `push: branches: [main]` and `pull_request:`.
+# Manual only until a run passes. Then put back `push: branches: [main]`
+# and `pull_request:`.
 on:
   workflow_dispatch:
 
@@ -12,10 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Xcode 26.6, the newest release on the image on 2026-09-26, crashes
-      # clang on swift-cmark. The App Store builds are made with Xcode 27, so
-      # CI takes the newest Xcode present, beta included: it only checks that
-      # the code compiles, it never produces what ships.
+      # The App Store builds are made with Xcode 27 on the developer's Mac.
+      # CI takes the newest Xcode on the runner (beta included: it only checks
+      # that the code compiles, it never produces what ships), so the code
+      # must also build with the older compiler the image may still carry.
       - name: Select newest Xcode
         run: |
           ls -d /Applications/Xcode*.app

@@ -61,8 +61,8 @@ enum SidebarTagSelection {
         currentTags: Set<String>,
         modifier: Modifier
     ) -> Resolution {
-        let currentCollection = collection(from: currentCollection)
-        let collections = proposed.compactMap(\.collection).map { collection(from: $0) }
+        let currentCollection = Self.collection(from: currentCollection)
+        let collections = proposed.compactMap(\.collection).map { Self.collection(from: $0) }
         let proposedTags = Set(proposed.compactMap(\.tag))
         let shape = Shape.of(collections: collections, tags: proposedTags)
 
