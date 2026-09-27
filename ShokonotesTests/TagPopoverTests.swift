@@ -246,4 +246,15 @@ final class TagPopoverTests: XCTestCase {
         XCTAssertEqual(
             TagTokenField.partial(in: ["client", "  proj "], committed: ["client"]), "proj")
     }
+
+    /// Inline completion only when the first offer begins with what was typed:
+    /// "cet" must not be completed into "recettes" under the caret.
+    func testInlineCompletionOnlyForPrefixOffers() {
+        XCTAssertTrue(TagTokenField.completesInline(typed: "rec", firstOffer: "recettes"))
+        XCTAssertTrue(TagTokenField.completesInline(typed: "Rec", firstOffer: "recettes"))
+        XCTAssertTrue(TagTokenField.completesInline(typed: "petit-dé", firstOffer: "petit-déjeuner"))
+        XCTAssertFalse(TagTokenField.completesInline(typed: "cet", firstOffer: "recettes"))
+        XCTAssertFalse(TagTokenField.completesInline(typed: "rec", firstOffer: nil))
+        XCTAssertFalse(TagTokenField.completesInline(typed: "  ", firstOffer: "recettes"))
+    }
 }

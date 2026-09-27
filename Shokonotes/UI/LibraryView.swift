@@ -306,7 +306,11 @@ struct LibraryView: View {
     private func tagCompletions(_ substring: String) -> [String] {
         let needle = substring.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !needle.isEmpty else { return [] }
-        return model.tags.filter { $0.localizedCaseInsensitiveContains(needle) }
+        // Names that begin with what was typed come first, so the field can
+        // complete them inline; names that merely contain it follow.
+        let matches = model.tags.filter { $0.localizedCaseInsensitiveContains(needle) }
+        let starts = matches.filter { TagTokenField.completesInline(typed: needle, firstOffer: $0) }
+        return starts + matches.filter { !starts.contains($0) }
     }
 
     /// A real macOS source list, not a `List`: it is the only thing that can

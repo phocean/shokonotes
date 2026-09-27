@@ -112,8 +112,38 @@ struct TagTokenField: NSViewRepresentable {
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
 
+    /// Takes the keyboard when it lands in its window, and makes that window
+    /// key. Opened from a row's swipe action, the popover appeared without
+    /// becoming key: keystrokes went on to the note list, whose type-to-search
+    /// sent them to the toolbar search field. A first responder in a window
+    /// that is not key receives nothing, so both steps are needed.
+    final class FocusingTokenField: NSTokenField {
+        override func viewDidMoveToWindow() {
+            super.viewDidMoveToWindow()
+            guard window != nil else { return }
+            DispatchQueue.main.async { [weak self] in
+                guard let self, let window = self.window else { return }
+                window.makeKey()
+                window.makeFirstResponder(self)
+            }
+        }
+    }
+
+    /// Whether AppKit may complete inline with the first offer. Inline
+    /// completion replaces the typed word with the offer and selects the
+    /// remainder, which is only right when the offer **begins** with what was
+    /// typed. The offers match anywhere in a name, so "cet" can offer
+    /// "recettes": completed inline, the next keystroke overwrote it and typing
+    /// looked erratic. Pure, so the rule is testable without a field editor.
+    static func completesInline(typed: String, firstOffer: String?) -> Bool {
+        guard let firstOffer else { return false }
+        let typed = typed.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !typed.isEmpty else { return false }
+        return firstOffer.range(of: typed, options: [.caseInsensitive, .diacriticInsensitive, .anchored]) != nil
+    }
+
     func makeNSView(context: Context) -> NSTokenField {
-        let field = NSTokenField()
+        let field = FocusingTokenField()
         field.delegate = context.coordinator
         field.tokenStyle = .rounded
         field.tokenizingCharacterSet = CharacterSet(charactersIn: ",")
@@ -137,13 +167,9 @@ struct TagTokenField: NSViewRepresentable {
         }
 
         // The field opens with the keyboard, so typing is the first thing that
-        // works. This never touches `SidebarSourceList`'s focus token: the
-        // popover has its own window, and closing it hands the responder back
-        // to whatever held it.
-        DispatchQueue.main.async { [weak field] in
-            guard let field, let window = field.window else { return }
-            window.makeFirstResponder(field)
-        }
+        // works — see `FocusingTokenField`. This never touches
+        // `SidebarSourceList`'s focus token: the popover has its own window,
+        // and closing it hands the responder back to whatever held it.
         return field
     }
 
@@ -223,7 +249,13 @@ struct TagTokenField: NSViewRepresentable {
             indexOfToken tokenIndex: Int,
             indexOfSelectedItem selectedIndex: UnsafeMutablePointer<Int>?
         ) -> [Any]? {
-            parent.completions(substring)
+            let offers = parent.completions(substring)
+            // No inline completion unless the first offer extends what was
+            // typed — see `completesInline`. The list still drops down.
+            if !TagTokenField.completesInline(typed: substring, firstOffer: offers.first) {
+                selectedIndex?.pointee = -1
+            }
+            return offers
         }
 
         /// Tab and Escape, taken from the field editor so the popover answers
