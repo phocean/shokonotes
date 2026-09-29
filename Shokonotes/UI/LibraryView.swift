@@ -52,19 +52,51 @@ struct LibraryView: View {
     }
 
     var body: some View {
-        HSplitView {
-            if model.sidebarVisible {
-                sidebar
-                    .frame(minWidth: 180, idealWidth: 220, maxWidth: 360, maxHeight: .infinity)
+        // Two structures, one per sidebar mode, sharing the same three column
+        // views and every modifier below. Glass (the default): a
+        // `NavigationSplitView`, whose sidebar column is the system's own — the
+        // floating Liquid Glass panel on macOS 26 and later, the classic
+        // translucent one before. Opaque: the `HSplitView` the app always had,
+        // over `OpaqueBackdropView`. The switch rebuilds the columns, which is
+        // acceptable for a setting; `LibraryToolbarController` is told to look
+        // for the new split view (`structureDidChange`).
+        //
+        // **One background layer on the folder column, in either mode**: the
+        // system's in one, the window's backdrop in the other. Nothing in this
+        // tree paints behind `sidebar`.
+        Group {
+            if settings.opaqueSidebar {
+                HSplitView {
+                    if model.sidebarVisible {
+                        sidebar
+                            .frame(minWidth: 180, idealWidth: 220, maxWidth: 360, maxHeight: .infinity)
+                    }
+                    noteList
+                        .frame(minWidth: 340, idealWidth: 380, maxWidth: .infinity, maxHeight: .infinity)
+                        .background { columnBackground }
+                        .layoutPriority(0)
+                    previewPane
+                        .frame(minWidth: 420, idealWidth: 560, maxWidth: .infinity, maxHeight: .infinity)
+                        .background { columnBackground }
+                        .layoutPriority(1)
+                }
+            } else {
+                NavigationSplitView(columnVisibility: columnVisibility) {
+                    sidebar
+                        .navigationSplitViewColumnWidth(min: 200, ideal: 220, max: 360)
+                } content: {
+                    noteList
+                        .navigationSplitViewColumnWidth(min: 340, ideal: 380, max: 800)
+                        .background { columnBackground }
+                } detail: {
+                    previewPane
+                        .frame(minWidth: 420, maxWidth: .infinity, maxHeight: .infinity)
+                        .background { columnBackground }
+                }
+                // Our own `NSToolbar` carries the sidebar button; the system's
+                // must not add a second one if it ever builds its own.
+                .toolbar(removing: .sidebarToggle)
             }
-            noteList
-                .frame(minWidth: 340, idealWidth: 380, maxWidth: .infinity, maxHeight: .infinity)
-                .background { Color(nsColor: .textBackgroundColor).ignoresSafeArea() }
-                .layoutPriority(0)
-            previewPane
-                .frame(minWidth: 420, idealWidth: 560, maxWidth: .infinity, maxHeight: .infinity)
-                .background { Color(nsColor: .textBackgroundColor).ignoresSafeArea() }
-                .layoutPriority(1)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .sheet(item: $renameTarget) { note in
@@ -148,6 +180,19 @@ struct LibraryView: View {
                 pane = model.notes.isEmpty ? .preview : .notes
             } else if visible, pane == nil {
                 focusSidebar()
+            }
+        }
+        // The other structure builds new columns, so whichever held the
+        // keyboard has lost it. Give it back to the same column, one turn later
+        // so the new tree exists.
+        .onChange(of: settings.opaqueSidebar) { _, _ in
+            let column = model.focusedPane
+            DispatchQueue.main.async {
+                if column == .sidebar, model.sidebarVisible {
+                    focusSidebar()
+                } else if column != .sidebar {
+                    pane = column
+                }
             }
         }
         .onChange(of: model.focusRequest) { _, request in
@@ -311,6 +356,24 @@ struct LibraryView: View {
         let matches = model.tags.filter { $0.localizedCaseInsensitiveContains(needle) }
         let starts = matches.filter { TagTokenField.completesInline(typed: needle, firstOffer: $0) }
         return starts + matches.filter { !starts.contains($0) }
+    }
+
+    /// The note list and the preview paint the text background themselves, up
+    /// under the titlebar; only the folder column leaves it to the window.
+    private var columnBackground: some View {
+        Color(nsColor: .textBackgroundColor).ignoresSafeArea()
+    }
+
+    /// `LibraryModel.sidebarVisible` stays the single truth; the split view only
+    /// reflects it, and reports a collapse made by dragging the divider.
+    private var columnVisibility: Binding<NavigationSplitViewVisibility> {
+        Binding(
+            get: { model.sidebarVisible ? .all : .doubleColumn },
+            set: { newValue in
+                let visible = newValue != .doubleColumn && newValue != .detailOnly
+                if model.sidebarVisible != visible { model.sidebarVisible = visible }
+            }
+        )
     }
 
     /// A real macOS source list, not a `List`: it is the only thing that can

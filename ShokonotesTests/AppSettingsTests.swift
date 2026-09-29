@@ -28,6 +28,25 @@ final class AppSettingsTests: XCTestCase {
         XCTAssertFalse(AppSettings(defaults: defaults).quitOnWindowClose)
     }
 
+    /// The folder column is the system sidebar unless he opts out: off by
+    /// default, one key, and the choice survives a new settings instance.
+    func testOpaqueSidebarIsOffByDefaultAndPersists() throws {
+        let suite = "shokonotes-settings-tests-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+
+        let settings = AppSettings(defaults: defaults)
+        XCTAssertFalse(settings.opaqueSidebar)
+        XCTAssertEqual(defaults.object(forKey: "opaqueSidebar") as? Bool, false)
+
+        settings.opaqueSidebar = true
+        XCTAssertEqual(defaults.object(forKey: "opaqueSidebar") as? Bool, true)
+        XCTAssertTrue(AppSettings(defaults: defaults).opaqueSidebar)
+
+        settings.opaqueSidebar = false
+        XCTAssertFalse(AppSettings(defaults: defaults).opaqueSidebar)
+    }
+
     /// `showInboxBadge` moved in the same diff that renamed another key. Its own
     /// key must be untouched, so an existing preference keeps being read.
     func testInboxBadgeKeepsItsUserDefaultsKey() throws {

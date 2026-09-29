@@ -1,9 +1,12 @@
 import AppKit
+import Combine
 import SwiftUI
 
-/// The window's background: one flat semantic colour, and the only background
-/// the folder column has. It replaced an `NSVisualEffectView` — see where it is
-/// installed in `show()`.
+/// The window's background in **opaque sidebar** mode: one flat semantic
+/// colour, and the only background the folder column has then. In the default
+/// glass mode it is switched off (`fillsBackground`) and draws nothing: the
+/// system's sidebar is that column's one layer. It replaced an
+/// `NSVisualEffectView` — see where it is installed in `show()`.
 ///
 /// It fills in `draw(_:)` rather than setting a layer colour, so the fill is
 /// resolved against the appearance in force at the moment it is drawn; a
@@ -11,9 +14,14 @@ import SwiftUI
 /// after a switch to dark. `viewDidChangeEffectiveAppearance` asks for that
 /// redraw, because AppKit does not promise one for a view that draws itself.
 final class OpaqueBackdropView: NSView {
-    override var isOpaque: Bool { true }
+    var fillsBackground = true {
+        didSet { if fillsBackground != oldValue { needsDisplay = true } }
+    }
+
+    override var isOpaque: Bool { fillsBackground }
 
     override func draw(_ dirtyRect: NSRect) {
+        guard fillsBackground else { return }
         NSColor.windowBackgroundColor.setFill()
         dirtyRect.fill()
     }
@@ -48,6 +56,37 @@ final class LibraryWindowController: NSWindowController, NSWindowDelegate, NSMen
     private static var shared: LibraryWindowController?
     private static var libraryToolbar: LibraryToolbarController?
     private var hosted: NSHostingController<LibraryView>?
+    private var backdrop: OpaqueBackdropView?
+    private var sidebarModeObserver: AnyCancellable?
+    private var appliedOpaqueSidebar: Bool?
+
+    /// Glass (default) or opaque folder column. Opaque: the window is opaque and
+    /// the backdrop fills it, exactly as before. Glass: the backdrop draws
+    /// nothing, so the only layer behind the column is
+    /// the system sidebar's. The SwiftUI tree swaps its own structure on the
+    /// same setting; the toolbar is then pointed at the new split view.
+    private func applySidebarMode(force: Bool = false) {
+        let opaque = AppSettings.shared.opaqueSidebar
+        guard force || appliedOpaqueSidebar != opaque, let window else { return }
+        appliedOpaqueSidebar = opaque
+        backdrop?.fillsBackground = opaque
+        // The window stays opaque with its ordinary background in both modes.
+        // A clear window in glass mode left the 1 pt strip of the list /
+        // preview divider — the one place no column paints — with nothing
+        // behind it, so the translucent separator colour drew over the
+        // desktop and read much heavier than over `windowBackgroundColor`.
+        // The system sidebar does not need a clear window: the glass is its
+        // own layer, and a default window is what any sidebar app has.
+        window.isOpaque = true
+        window.backgroundColor = .windowBackgroundColor
+        guard !force else { return }
+        // The SwiftUI tree rebuilds on this same change; look for its split
+        // view once it has laid out.
+        DispatchQueue.main.async {
+            window.contentView?.layoutSubtreeIfNeeded()
+            Self.libraryToolbar?.structureDidChange()
+        }
+    }
 
     static func notifyStorageChanged() {
         NotificationCenter.default.post(name: storageDidChange, object: nil)
@@ -271,6 +310,8 @@ final class LibraryWindowController: NSWindowController, NSWindowDelegate, NSMen
         // what the vibrancy needed; kept, it would show through as a flash of
         // nothing wherever the content has not been redrawn yet — the sidebar
         // divider being dragged is exactly that case.
+        // Set for real by `applySidebarMode` once the controller exists: opaque
+        // and flat for the opaque sidebar, the system glass otherwise.
         window.isOpaque = true
         window.backgroundColor = .windowBackgroundColor
         // Wide enough for the three columns at their minimum, dividers
@@ -317,6 +358,9 @@ final class LibraryWindowController: NSWindowController, NSWindowDelegate, NSMen
 
         let hosting = NSHostingController(rootView: LibraryView())
         hosting.sizingOptions = []
+        // The window's toolbar and title are ours (`LibraryToolbarController`);
+        // the `NavigationSplitView` of the glass mode must not take them over.
+        hosting.sceneBridgingOptions = []
         hosting.view.translatesAutoresizingMaskIntoConstraints = false
         backdrop.addSubview(hosting.view)
         NSLayoutConstraint.activate([
@@ -333,6 +377,11 @@ final class LibraryWindowController: NSWindowController, NSWindowDelegate, NSMen
 
         let controller = LibraryWindowController(window: window)
         controller.hosted = hosting
+        controller.backdrop = backdrop
+        controller.applySidebarMode(force: true)
+        controller.sidebarModeObserver = AppSettings.shared.objectWillChange
+            .receive(on: DispatchQueue.main)
+            .sink { [weak controller] _ in controller?.applySidebarMode() }
         shared = controller
         window.delegate = controller
         controller.showWindow(nil)
@@ -347,6 +396,12 @@ final class LibraryWindowController: NSWindowController, NSWindowDelegate, NSMen
 
         window.toolbar = toolbar.makeToolbar(
             splitView: LibraryToolbarController.splitView(in: window.contentView))
+        // A `NavigationSplitView` may not have built its split view by the first
+        // layout pass; look again on the next turn and rebuild if it appeared.
+        DispatchQueue.main.async { [weak toolbar] in
+            window.contentView?.layoutSubtreeIfNeeded()
+            toolbar?.structureDidChange()
+        }
 
         if activateApplication {
             NSApp.activate(ignoringOtherApps: true)

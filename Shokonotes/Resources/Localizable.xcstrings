@@ -16219,6 +16219,71 @@
           }
         }
       }
+    },
+    "Opaque sidebar": {
+      "comment": "Toggle in Settings > Appearance, under Theme. Off by default: the folder sidebar uses the system sidebar material (Liquid Glass on recent macOS). On: the sidebar is a flat, opaque column, for Macs where the translucent one flickers. \"Sidebar\" is the folder column at the left of the library window; use the term your macOS uses for it.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opaque sidebar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barre latérale opaque"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Undurchsichtige Seitenleiste"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barra lateral opaca"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barra laterale opaca"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不透明なサイドバー"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "불투명 사이드바"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barra lateral opaca"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Непрозрачная боковая панель"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不透明边栏"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

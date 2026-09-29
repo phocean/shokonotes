@@ -137,13 +137,14 @@ struct SidebarSourceList: NSViewRepresentable {
         outline.allowsMultipleSelection = true
         outline.focusRingType = .none
         outline.draggingDestinationFeedbackStyle = .sourceList
-        // The window's backdrop is the *only* background in this column, and it
-        // is now opaque — `OpaqueBackdropView` in `LibraryWindowController`,
-        // filled with `windowBackgroundColor`. The vibrancy it replaced flashed
-        // on every application switch. The rule that matters is unchanged and is
-        // what the first flicker cost: **one** layer, and only one. Nothing goes
-        // behind this outline — if the column reads too light or too dark,
-        // change the colour in that backdrop, not here.
+        // The folder column has **one** background layer, and it is never this
+        // outline's: in the default mode it is the system sidebar's (Liquid
+        // Glass on macOS 26 and later), in the opaque-sidebar mode the window's
+        // `OpaqueBackdropView`. Nothing goes behind this outline — if the column
+        // reads too light or too dark, that is the system's, or the backdrop's
+        // colour in `LibraryWindowController`, not something to fix here. The
+        // selection and text colours below are all AppKit semantic colours, so
+        // they hold on either background.
         outline.backgroundColor = .clear
 
         outline.dataSource = context.coordinator

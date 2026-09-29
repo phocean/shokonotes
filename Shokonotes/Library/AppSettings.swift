@@ -51,6 +51,7 @@ final class AppSettings: ObservableObject {
         static let showInboxBadge = "showInboxBadge"
         // A fresh opt-in: ignore the retired "quitOnWindowClose" preference.
         static let quitOnWindowClose = "quitOnLibraryWindowClose"
+        static let opaqueSidebar = "opaqueSidebar"
         static let previewCodeTheme = "previewCodeTheme"
         static let previewTheme = "previewTheme"
         #if os(macOS)
@@ -85,6 +86,9 @@ final class AppSettings: ObservableObject {
         }
         if defaults.object(forKey: Key.showDate) == nil {
             defaults.set(true, forKey: Key.showDate)
+        }
+        if defaults.object(forKey: Key.opaqueSidebar) == nil {
+            defaults.set(false, forKey: Key.opaqueSidebar)
         }
         if defaults.object(forKey: Key.sortAscending) == nil {
             defaults.set(false, forKey: Key.sortAscending)
@@ -199,6 +203,15 @@ final class AppSettings: ObservableObject {
     var quitOnWindowClose: Bool {
         get { defaults.bool(forKey: Key.quitOnWindowClose) }
         set { defaults.set(newValue, forKey: Key.quitOnWindowClose); objectWillChange.send() }
+    }
+
+    /// Mac only in practice (iOS never reads it). Off by default: the folder
+    /// column is the system sidebar, Liquid Glass on macOS 26 and later. On, it
+    /// is the flat `windowBackgroundColor` column the app had before, kept for
+    /// machines where a translucent panel flashes on every app switch.
+    var opaqueSidebar: Bool {
+        get { defaults.bool(forKey: Key.opaqueSidebar) }
+        set { defaults.set(newValue, forKey: Key.opaqueSidebar); objectWillChange.send() }
     }
 
     var previewCodeTheme: PreviewCodeTheme {

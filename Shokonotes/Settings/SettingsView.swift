@@ -212,6 +212,11 @@ private struct AppearanceSettings: View {
                     Text("Dark").tag(AppearanceMode.dark)
                 }
                 .pickerStyle(.segmented)
+
+                Toggle("Opaque sidebar", isOn: Binding(
+                    get: { settings.opaqueSidebar },
+                    set: { settings.opaqueSidebar = $0 }
+                ))
             }
 
             SwiftUI.Section("Rows") {

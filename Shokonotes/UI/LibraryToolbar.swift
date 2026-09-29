@@ -116,8 +116,8 @@ final class LibraryToolbarController: NSObject, NSToolbarDelegate, NSSearchField
         return toolbar
     }
 
-    /// The first split view under `root`, which is the one SwiftUI's `HSplitView`
-    /// is backed by.
+    /// The first split view under `root`: the one SwiftUI's `HSplitView` (opaque
+    /// sidebar) or `NavigationSplitView` (glass sidebar) is backed by.
     static func splitView(in root: NSView?) -> NSSplitView? {
         guard let root else { return nil }
         if let split = root as? NSSplitView { return split }
@@ -164,6 +164,19 @@ final class LibraryToolbarController: NSObject, NSToolbarDelegate, NSSearchField
         // those buttons stay at the left. With no divider between them, the
         // same run would otherwise swallow the new-note button as well.
         LibraryToolbarLayout.identifiers(sidebarVisible: model.sidebarVisible)
+    }
+
+    /// The columns were rebuilt — the sidebar mode changed, or the
+    /// `NavigationSplitView` finished its first layout — so the tracking
+    /// separators must be pointed at the split view that exists now. Tried
+    /// twice: SwiftUI does not promise its update has landed on the next turn.
+    func structureDidChange() {
+        rebuildItems()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+            guard let self else { return }
+            let found = Self.splitView(in: LibraryWindowController.currentWindow?.contentView)
+            if found !== splitView { rebuildItems() }
+        }
     }
 
     private func rebuildItems() {
@@ -228,11 +241,17 @@ final class LibraryToolbarController: NSObject, NSToolbarDelegate, NSSearchField
             // Dividers count from the left. The sidebar / list one is always the
             // first; the list / preview one is the second while the sidebar is
             // showing and the first once it is gone.
+            //
+            // In opaque mode the `HSplitView` drops the sidebar's subview when it
+            // is hidden, so the second divider becomes the first. In glass mode
+            // the `NavigationSplitView` keeps a collapsed sidebar as an arranged
+            // (hidden) subview, so the list / preview divider is always the
+            // second.
             let index: Int
             if itemIdentifier == LibraryToolbarLayout.sidebarSeparator {
                 index = 0
             } else {
-                index = model.sidebarVisible ? 1 : 0
+                index = (model.sidebarVisible || !AppSettings.shared.opaqueSidebar) ? 1 : 0
             }
             guard let splitView, splitView.arrangedSubviews.count > index + 1 else { return nil }
             return NSTrackingSeparatorToolbarItem(
