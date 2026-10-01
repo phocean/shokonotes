@@ -14,4 +14,4 @@ you choose.
 - The Home Screen badge is a local inbox count; it is not sent anywhere.
 - Network access is not requested.
 
-Contact: Jean-Christophe Baptiste.
+Contact: Jean-Christophe Baptiste — shokonotes@phocean.net · [Support](https://phocean.github.io/shokonotes/support.html)

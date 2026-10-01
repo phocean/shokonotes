@@ -60,7 +60,7 @@ Shokonotes is one person's work, paid for out of pocket — the Apple developer 
 
 ## Feedback
 
-Shokonotes is shaped by use, and yours counts. Bug reports, rough edges, confusing wording and feature suggestions are all welcome: [open an issue](https://github.com/phocean/shokonotes/issues).
+Shokonotes is shaped by use, and yours counts. Bug reports, rough edges, confusing wording and feature suggestions are all welcome: write to [shokonotes@phocean.net](mailto:shokonotes@phocean.net), see the [support page](https://phocean.github.io/shokonotes/support.html), or [open an issue](https://github.com/phocean/shokonotes/issues).
 
 Two things worth knowing before you write. It is one person answering, so give me a few days. And "do few things, do them well" means some suggestions will get a friendly no — that is not dismissal, it is the reason the app stays small enough to be good at what it does.
 

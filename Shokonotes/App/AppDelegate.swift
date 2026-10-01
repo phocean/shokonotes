@@ -54,6 +54,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         AboutWindowController.show()
     }
 
+    /// Window ▸ Library. Same path as the Dock reopen: shows the one library
+    /// window whether it was closed, minimized or buried. Targeted at the
+    /// delegate (nil target), so it stays enabled with no window open.
+    @objc func showLibraryWindow(_ sender: Any?) {
+        LibraryWindowController.show()
+    }
+
     @objc func openPreferences(_ sender: Any?) {
         SettingsWindowController.show()
     }

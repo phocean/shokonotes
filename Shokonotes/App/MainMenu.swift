@@ -179,12 +179,18 @@ enum MainMenu {
         }
     }
 
-    private static func windowMenuItem() -> NSMenuItem {
+    static func windowMenuItem() -> NSMenuItem {
         let item = submenu(NSLocalizedString("Window", comment: "")) { menu in
             menu.addItem(withTitle: NSLocalizedString("Minimize", comment: ""),
                          action: #selector(NSWindow.performMiniaturize(_:)), keyEquivalent: "m")
             menu.addItem(withTitle: NSLocalizedString("Zoom", comment: ""),
                          action: #selector(NSWindow.performZoom(_:)), keyEquivalent: "")
+            menu.addItem(.separator())
+            let library = menu.addItem(
+                withTitle: NSLocalizedString("Library", comment: ""),
+                action: #selector(AppDelegate.showLibraryWindow(_:)),
+                keyEquivalent: "0")
+            library.keyEquivalentModifierMask = [.command]
             menu.addItem(.separator())
             menu.addItem(withTitle: NSLocalizedString("Bring All to Front", comment: ""),
                          action: #selector(NSApplication.arrangeInFront(_:)), keyEquivalent: "")
