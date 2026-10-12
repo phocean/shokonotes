@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shokonotes — User manual</title>
+  <meta name="description" content="How to find, read, sort and write your notes with Shokonotes, and a short guide to Markdown. English and français.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="images/icon.png">
+</head>
+<body>
+  <header class="site">
+    <a class="brand" href="./"><img src="images/icon.png" alt="">Shokonotes</a>
+    <nav><a href="./">Home</a><a class="current" href="manual.html">Manual</a><a href="support.html">Support</a></nav>
+  </header>
+  <main class="manual">
+<section id="en" lang="en">
+<h1 id="en-top">User manual</h1><p class="lede">Everything you need to find, read, sort and write your notes. The same text ships inside the app, in the Welcome folder. <a href="#fr">Version française plus bas.</a></p><div class="box toc"><strong>Using Shokonotes</strong><ul><li><a href="#en-read-and-search">Read and Search</a></li><li><a href="#en-organise">Organise</a></li><li><a href="#en-write">Write</a></li><li><a href="#en-iphone-and-sync">iPhone and Sync</a></li><li><a href="#en-customise">Customise</a></li></ul><strong>Markdown syntax</strong><ul><li><a href="#en-headings-and-text">Headings and Text</a></li><li><a href="#en-lists-and-tasks">Lists and Tasks</a></li><li><a href="#en-links-and-images">Links and Images</a></li><li><a href="#en-code">Code</a></li><li><a href="#en-tables-and-quotes">Tables and Quotes</a></li></ul></div>
+<h2 id="en-read-and-search">Read and Search</h2>
+<p>The window has three columns: <strong>folders and tags</strong> on the left, <strong>the list of notes</strong> in the middle, <strong>the note, formatted</strong> on the right.</p>
+<h3>Moving around</h3>
+<ul><li>Click a folder to list its notes <strong>and the notes of its subfolders</strong> (a setting lets you restrict it to the folder itself).</li><li><strong>Inbox</strong> holds new notes that are not filed yet. <strong>All Notes</strong> is the whole library. <strong>Trash</strong> keeps what you deleted until you empty it.</li><li>With the keyboard: ← and → move between the folders and the list, ↑ and ↓ move inside a column, Space opens or closes a folder.</li></ul>
+<h3>Search</h3>
+<p>Press <code>⌘F</code> (or click the search field) and type. The list narrows while you type, over titles and the full text of every note. <code>Esc</code> clears the search.</p>
+<p>Once a note is open, search highlights the words inside it; <code>⌘G</code> jumps to the next match and <code>⇧⌘G</code> to the previous one.</p>
+<h3>Reading is read-only</h3>
+<p>Selecting, browsing and searching never put you in edit mode. A note changes only when you explicitly open it for writing (see <em>Write</em>).</p>
+<h3>Pins and favourites</h3>
+<p>Pin a note to keep it at the top of its list: right-click it, or swipe the row. Folders and tags can be made favourites from their context menu, and a folder can get its own symbol (right-click ▸ <em>Choose Symbol…</em>).</p>
+<h3>Reading in its own window</h3>
+<p>To keep a note in view, for example on a second display, choose <strong>File ▸ Detach Note for Reading</strong> (<code>⌥⌘Return</code>), use the toolbar button, or right-click a note. A window opens with that note, read-only, in your preview theme. It follows the file when it changes or is renamed, and you can go full screen. Close it with <code>⌘W</code>.</p>
+<h2 id="en-organise">Organise</h2>
+<p>Shokonotes gives you two ways to sort notes, and they work together.</p>
+<h3>Folders</h3>
+<p>A folder is a real folder on your disk. Use them for <strong>where a note belongs</strong>: one folder per activity, project, or part of your life.</p>
+<ul><li><code>⇧⌘N</code> creates a folder, <code>⌘R</code> renames the selected note or folder.</li><li><strong>Drag</strong> a note onto a folder to move it, or drag a folder onto another one. The insertion line shows the level the folder will land on.</li><li>Folders can be nested as deep as you like.</li></ul>
+<h3>Tags</h3>
+<p>A tag is a word attached to a note, stored in the note's own header (see below). A note can have several, and tags cut <strong>across</strong> folders: a recipe can live in <em>Recipes</em> and also be tagged <code>dinner-party</code>.</p>
+<ul><li>Press <code>⌃⌘T</code> on a note to edit its tags. Type, press Return or comma to confirm; suggestions come from the tags you already use, to avoid having <code>project</code> next to <code>projects</code>.</li><li>Click a tag in the sidebar to list every note that carries it.</li></ul>
+<h3>The Trash</h3>
+<p><code>⌘⌫</code> sends the selected notes to the Trash. A note can be restored to the place it came from, until you empty the Trash.</p>
+<h3>What a note looks like on disk</h3>
+<p>A note may start with a small header between two <code>---</code> lines:</p>
+<pre><code class="language-yaml">---
+title: "Start Here"
+tags: [welcome]
+created: 2026-10-08
+---</code></pre>
+<p>It is optional. Without it, the title is the first line of the note (or the file name, depending on your settings) and the note has no tags. Shokonotes only ever rewrites the lines it owns: <code>title</code>, <code>tags</code> and <code>created</code>.</p>
+<h2 id="en-write">Write</h2>
+<p>Writing happens in a window of its own, never inside the library.</p>
+<h3>Open a note for writing</h3>
+<p>Press <strong>Return</strong>, double-click a note, or press <code>⌘N</code> for a new one. Which editor opens is your choice, in <strong>Settings ▸ General ▸ Open notes with</strong>:</p>
+<ul><li><strong>Shokonotes' editor</strong> — a quiet Markdown editor with colouring, list continuation and code-block completion. Your text is saved continuously: there is no Save button.</li><li><strong>An external app</strong> — Typora, VS Code, BBEdit, TextEdit… Shokonotes picks up your changes the moment the file is saved.</li></ul>
+<p><code>⌘O</code> opens a note in the editor you chose, <code>⌥⌘O</code> in the other one. Both shortcuts can be changed in Settings.</p>
+<h3>The editor</h3>
+<ul><li>The <strong>title</strong> sits at the top; editing it renames the file too: title and file name are the same thing.</li><li>Tags and the creation date are shown in a small bar above the text.</li><li><code>⌘W</code> closes the editor and returns to the library.</li><li>The text shown is the real Markdown, symbols included. <em>Markdown Syntax</em> next to this manual shows what each symbol does.</li></ul>
+<h3>Quick note, from anywhere</h3>
+<p>Press <code>⌃⌥⌘N</code> in any app: a new note is created in your <strong>Inbox</strong> and opens in the editor, without taking you away from what you were doing. You can change the shortcut in Settings.</p>
+<h3>Images</h3>
+<p>Three ways to add a picture, all from the editor:</p>
+<ul><li><strong>Drag</strong> one or several image files onto the text.</li><li><strong>Paste</strong> a screenshot or a copied image with <code>⌘V</code>.</li><li>Click the <strong>picture button</strong>, or choose <strong>Edit ▸ Insert Image…</strong> (<code>⇧⌘A</code>).</li></ul>
+<p>Shokonotes copies the file into an <code>images</code> folder next to the note and writes the link for you, for example <code>![holiday](images/holiday.jpg)</code>. Your original file is never moved. Names are kept, with a number added if one already exists. <code>⌘Z</code> removes the link; the copied file stays on disk.</p>
+<p>The <code>images</code> folder does not show up in the sidebar unless it contains notes. If you move a note to another folder, move its <code>images</code> folder too: the links are relative to the note.</p>
+<p>On iPhone, the picture menu next to <strong>Done</strong> offers your photo library, the Files app, or pasting an image. Photos are converted to JPEG and their location is removed.</p>
+<h3>Tables</h3>
+<p>Writing a table by hand is tedious, so Shokonotes has a small grid editor.</p>
+<ul><li>Put the cursor in a table and a <strong>Edit Table</strong> button appears above it. <code>⌥⌘T</code> and <strong>Edit ▸ Edit Table…</strong> do the same.</li><li><strong>Edit ▸ Insert Table…</strong> starts a new one.</li><li>Edit cells, set each column's alignment, add or remove rows and columns. The Markdown that will be written is shown below the grid.</li><li>Nothing changes in your note until you click <strong>Apply</strong>, and <code>⌘Z</code> undoes the whole table in one step.</li></ul>
+<p>The table is written aligned, so it stays readable as plain text. Tables inside a list or a quotation, or with a row that has more cells than the header, cannot be edited safely: the editor says why, and you can edit them as text.</p>
+<p>On iPhone, the same grid opens from the table menu in the editor header, next to the picture menu.</p>
+<h2 id="en-iphone-and-sync">iPhone and Sync</h2>
+<p>Shokonotes has no server and no account. Your notes travel the way any file does: through the sync service you already use.</p>
+<h3>With iCloud Drive</h3>
+<ol><li>On the Mac, keep your notes folder <strong>inside iCloud Drive</strong>.</li><li>On the iPhone, open Shokonotes, tap <strong>Choose Folder…</strong> and pick the same folder in iCloud Drive.</li></ol>
+<p>The iPhone app is a companion: search, read, and edit a note with the <strong>Edit</strong> button. A compose button captures a note into the Inbox. In Safari or any other app, <strong>Share ▸ Shokonotes</strong> saves a page or some text as a note.</p>
+<h3>Other sync tools</h3>
+<p>Nextcloud, Syncthing, a Git repository, or nothing at all: on the Mac, any folder works. On the iPhone, only folders in iCloud Drive are supported.</p>
+<h3>Good to know</h3>
+<ul><li>Rename and organise on the Mac; the phone is for capture and reading.</li><li>A folder you did not put in iCloud Drive stays on your Mac only.</li></ul>
+<h2 id="en-customise">Customise</h2>
+<p>Open <strong>Settings</strong> with <code>⌘,</code>.</p>
+<ul><li><strong>General</strong> — which editor opens notes, local and global shortcuts, what closing the window does (by default the app keeps running with its global shortcuts), whether folders list the notes of their subfolders.</li><li><strong>Storage</strong> — the notes folder, how new untitled notes are named, how iCloud conflicts are handled, the file extension.</li><li><strong>Appearance</strong> — the sidebar can be translucent like the rest of macOS, or opaque.</li><li><strong>Preview</strong> — theme, font and size of the formatted note and of the editor.</li></ul>
+<h3>If the window disappeared</h3>
+<p>Closing the window does not quit Shokonotes. Bring it back with <strong>Window ▸ Library</strong> (<code>⌘0</code>), a click on the Dock icon, or the global shortcut <code>⌃⌥⌘S</code>, which shows and hides the library from any app. Quit with <code>⌘Q</code>.</p>
+<h3>Print, export, share</h3>
+<p>The three buttons at the top right of a note print it, export it as a PDF that looks like the preview, or share the note file (Mail, Messages, AirDrop).</p>
+<h2 id="en-headings-and-text">Headings and Text</h2>
+<p>Markdown is plain text with a few symbols. This note shows the symbols <strong>and</strong> what they produce. Open it for writing (Return) to compare.</p>
+<h3>Headings</h3>
+<p>Start a line with one to six <code>#</code>:</p>
+<pre><code class="language-markdown"># Title
+## Section
+### Subsection</code></pre>
+<h3>Emphasis</h3>
+<p>You can write <em>italic</em> with single stars, <strong>bold</strong> with double stars, <strong><em>both</em></strong> with three, and <del>strike through</del> with double tildes.</p>
+<pre><code class="language-markdown">*italic*  **bold**  ***both***  ~~strike through~~</code></pre>
+<h3>Paragraphs and line breaks</h3>
+<p>A blank line starts a new paragraph. A single line break inside a paragraph is just a space.</p>
+<h3>Quotes</h3>
+<blockquote><p>A line that starts with <code>&gt;</code> is a quote. It can run over several lines.</p></blockquote>
+<h3>A horizontal rule</h3>
+<p>Three dashes on a line of their own draw a rule:</p>
+<hr>
+<h2 id="en-lists-and-tasks">Lists and Tasks</h2>
+<h3>Bullets</h3>
+<ul><li>Start a line with <code>-</code></li><li>Or with <code>*</code><ul><li>Indent by two spaces to nest</li></ul></li></ul>
+<h3>Numbered</h3>
+<ol><li>First</li><li>Second</li><li>Third</li></ol>
+<p>In the editor, pressing Return at the end of a list item starts the next one. Pressing Return on an empty item ends the list.</p>
+<h3>Tasks</h3>
+<ul><li><span class="task">☑</span> A finished task</li><li><span class="task">☐</span> A task still to do</li><li><span class="task">☐</span> Another one</li></ul>
+<pre><code class="language-markdown">- [x] done
+- [ ] to do</code></pre>
+<h2 id="en-links-and-images">Links and Images</h2>
+<h3>Links</h3>
+<p>Write the text in square brackets, then the address in parentheses:</p>
+<pre><code class="language-markdown">[Shokonotes](https://shokonotes.jcbaptiste.com)</code></pre>
+<p><a href="https://shokonotes.jcbaptiste.com">Shokonotes</a></p>
+<p>A bare address between angle brackets works too: <a href="https://example.com">https://example.com</a></p>
+<h3>Images</h3>
+<p>The same, with an exclamation mark in front. The path is relative to the note, so keep pictures next to your notes:</p>
+<pre><code class="language-markdown">![A short description](images/photo.jpg)</code></pre>
+<h3>Why relative paths</h3>
+<p>Your notes are plain files. If you move the folder to another computer, links to files inside it keep working because they never mention where the folder is.</p>
+<h2 id="en-code">Code</h2>
+<p>Put a word in <code>backticks</code> for inline code.</p>
+<p>For several lines, fence them with three backticks and name the language. The preview colours it, and the editor does the same.</p>
+<pre><code class="language-swift">func greet(_ name: String) -&gt; String {
+    "Hello, \(name)!"
+}</code></pre>
+<pre><code class="language-python">def greet(name):
+    return f"Hello, {name}!"</code></pre>
+<pre><code class="language-bash">echo "Hello" &gt; hello.txt</code></pre>
+<p>Hover a block in the preview to copy its content with one click.</p>
+<h2 id="en-tables-and-quotes">Tables and Quotes</h2>
+<h3>Tables</h3>
+<p>Separate columns with <code>|</code>, and draw the header line with dashes:</p>
+<pre><code class="language-markdown">| Fruit  | Colour | Season |
+| ------ | ------ | ------ |
+| Apple  | Red    | Autumn |
+| Cherry | Red    | Summer |</code></pre>
+<table><thead><tr><th>Fruit</th><th>Colour</th><th>Season</th></tr></thead><tbody><tr><td>Apple</td><td>Red</td><td>Autumn</td></tr><tr><td>Cherry</td><td>Red</td><td>Summer</td></tr></tbody></table>
+<p>Add a colon to align a column: <code>:---</code> left, <code>:---:</code> centre, <code>---:</code> right.</p>
+<h3>Nested quotes</h3>
+<blockquote><p>A quote</p>
+<blockquote><p>inside a quote</p></blockquote></blockquote>
+<h3>The header of a note</h3>
+<p>At the very top of a file, three dashes can open a small header, <em>front matter</em>. Shokonotes uses it for the title, the tags and the creation date:</p>
+<pre><code class="language-yaml">---
+title: "My note"
+tags: [idea, work]
+created: 2026-10-08
+---</code></pre>
+</section>
+<hr>
+<section id="fr" lang="fr">
+<h1 id="fr-top">Manuel d&#x27;utilisation</h1><p class="lede">Tout ce qu&#x27;il faut pour chercher, lire, classer et écrire vos notes. Le même texte est livré dans l&#x27;app, dans le dossier Bienvenue.</p><div class="box toc"><strong>Utiliser Shokonotes</strong><ul><li><a href="#fr-lire-et-chercher">Lire et chercher</a></li><li><a href="#fr-classer-vos-notes">Classer vos notes</a></li><li><a href="#fr-prendre-des-notes">Prendre des notes</a></li><li><a href="#fr-iphone-et-synchronisation">iPhone et synchronisation</a></li><li><a href="#fr-personnaliser">Personnaliser</a></li></ul><strong>Syntaxe Markdown</strong><ul><li><a href="#fr-titres-et-texte">Titres et texte</a></li><li><a href="#fr-listes-et-taches">Listes et taches</a></li><li><a href="#fr-liens-et-images">Liens et images</a></li><li><a href="#fr-code">Code</a></li><li><a href="#fr-tableaux-et-citations">Tableaux et citations</a></li></ul></div>
+<h2 id="fr-lire-et-chercher">Lire et chercher</h2>
+<p>La fenêtre a trois colonnes : <strong>dossiers et étiquettes</strong> à gauche, <strong>la liste des notes</strong> au milieu, <strong>la note mise en forme</strong> à droite.</p>
+<h3>Se déplacer</h3>
+<ul><li>Cliquez sur un dossier pour lister ses notes **et celles de ses sous-dossiers** (un réglage permet de se limiter au dossier lui-même).</li><li><strong>Inbox</strong> reçoit les nouvelles notes pas encore classées. **Toutes les notes<strong> montre toute la bibliothèque. </strong>Corbeille** garde ce que vous avez supprimé jusqu'à ce que vous la vidiez.</li><li>Au clavier : ← et → passent des dossiers à la liste, ↑ et ↓ se déplacent dans une colonne, Espace ouvre ou ferme un dossier.</li></ul>
+<h3>Chercher</h3>
+<p>Tapez <code>⌘F</code> (ou cliquez dans le champ de recherche) puis votre texte. La liste se réduit pendant la frappe, sur les titres et sur tout le texte des notes. <code>Échap</code> efface la recherche.</p>
+<p>Une fois une note ouverte, la recherche surligne les mots dedans ; <code>⌘G</code> va à l'occurrence suivante, <code>⇧⌘G</code> à la précédente.</p>
+<h3>Lire ne modifie rien</h3>
+<p>Sélectionner, parcourir et chercher ne vous mettent jamais en mode édition. Une note ne change que lorsque vous l'ouvrez explicitement pour écrire (voir <em>Prendre des notes</em>).</p>
+<h3>Épingles et favoris</h3>
+<p>Épinglez une note pour la garder en haut de sa liste : clic droit, ou balayage de la ligne. Dossiers et étiquettes peuvent devenir favoris depuis leur menu contextuel, et un dossier peut recevoir son propre symbole (clic droit ▸ <em>Choisir un symbole…</em>).</p>
+<h3>Lire dans sa propre fenêtre</h3>
+<p>Pour garder une note sous les yeux, par exemple sur un second écran, choisissez <strong>Fichier ▸ Détacher la note en lecture</strong> (<code>⌥⌘Entrée</code>), utilisez le bouton de la barre d'outils, ou faites un clic droit sur une note. Une fenêtre s'ouvre avec cette note, en lecture seule, dans votre thème d'aperçu. Elle suit le fichier quand il change ou est renommé, et peut passer en plein écran. Fermez-la avec <code>⌘W</code>.</p>
+<h2 id="fr-classer-vos-notes">Classer vos notes</h2>
+<p>Shokonotes propose deux manières de classer, qui se complètent.</p>
+<h3>Les dossiers</h3>
+<p>Un dossier est un vrai dossier sur votre disque. Servez-vous-en pour <strong>l'endroit où une note a sa place</strong> : un dossier par activité, par projet, par pan de vie.</p>
+<ul><li><code>⇧⌘N</code> crée un dossier, <code>⌘R</code> renomme la note ou le dossier sélectionné.</li><li><strong>Glissez</strong> une note sur un dossier pour la déplacer, ou un dossier sur un autre. Le trait d'insertion indique le niveau où il atterrira.</li><li>Les dossiers s'imbriquent à volonté.</li></ul>
+<h3>Les étiquettes</h3>
+<p>Une étiquette est un mot attaché à une note, stocké dans l'en-tête de la note elle-même (voir plus bas). Une note peut en avoir plusieurs, et les étiquettes traversent les dossiers : une recette peut vivre dans <em>Recettes</em> et porter aussi <code>repas-entre-amis</code>.</p>
+<ul><li><code>⌃⌘T</code> sur une note ouvre l'éditeur d'étiquettes. Tapez, validez par Entrée ou virgule ; les suggestions viennent de vos étiquettes existantes, pour éviter <code>projet</code> à côté de <code>projets</code>.</li><li>Cliquez une étiquette dans la barre latérale pour lister toutes les notes qui la portent.</li></ul>
+<h3>La Corbeille</h3>
+<p><code>⌘⌫</code> envoie les notes sélectionnées à la Corbeille. Une note peut être restaurée à sa place d'origine tant que vous ne videz pas la Corbeille.</p>
+<h3>À quoi ressemble une note sur le disque</h3>
+<p>Une note peut commencer par un petit en-tête entre deux lignes <code>---</code> :</p>
+<pre><code class="language-yaml">---
+title: "Lisez-moi"
+tags: [bienvenue]
+created: 2026-10-08
+---</code></pre>
+<p>Il est facultatif. Sans lui, le titre est la première ligne de la note (ou le nom du fichier, selon vos réglages) et la note n'a pas d'étiquette. Shokonotes ne réécrit que les lignes qui lui appartiennent : <code>title</code>, <code>tags</code> et <code>created</code>.</p>
+<h2 id="fr-prendre-des-notes">Prendre des notes</h2>
+<p>On écrit dans une fenêtre à part, jamais dans la bibliothèque.</p>
+<h3>Ouvrir une note pour écrire</h3>
+<p>Appuyez sur <strong>Entrée</strong>, double-cliquez une note, ou <code>⌘N</code> pour une nouvelle. L'éditeur qui s'ouvre se choisit dans <strong>Réglages ▸ Général ▸ Ouvrir les notes avec</strong> :</p>
+<ul><li><strong>L'éditeur de Shokonotes</strong> — un éditeur Markdown discret, avec coloration, continuation des listes et complétion des blocs de code. Le texte est enregistré en continu : il n'y a pas de bouton Enregistrer.</li><li><strong>Une app externe</strong> — Typora, VS Code, BBEdit, TextEdit… Shokonotes reprend vos modifications dès que le fichier est enregistré.</li></ul>
+<p><code>⌘O</code> ouvre une note dans l'éditeur choisi, <code>⌥⌘O</code> dans l'autre. Les deux raccourcis se changent dans les Réglages.</p>
+<h3>L'éditeur</h3>
+<ul><li>Le <strong>titre</strong> est en haut ; le modifier renomme aussi le fichier : titre et nom de fichier ne font qu'un.</li><li>Les étiquettes et la date de création sont dans une petite barre au-dessus du texte.</li><li><code>⌘W</code> ferme l'éditeur et rend la main à la bibliothèque.</li><li>Le texte affiché est le vrai Markdown, symboles compris. <em>Syntaxe Markdown</em>, à côté de ce manuel, montre ce que fait chaque symbole.</li></ul>
+<h3>Note rapide, de n'importe où</h3>
+<p><code>⌃⌥⌘N</code> dans n'importe quelle app : une nouvelle note est créée dans <strong>Inbox</strong> et s'ouvre dans l'éditeur, sans vous éloigner de ce que vous faisiez. Le raccourci se change dans les Réglages.</p>
+<h3>Images</h3>
+<p>Trois façons d'ajouter une image, toutes depuis l'éditeur :</p>
+<ul><li><strong>Glissez</strong> un ou plusieurs fichiers image sur le texte.</li><li><strong>Collez</strong> une capture d'écran ou une image copiée avec <code>⌘V</code>.</li><li>Cliquez le <strong>bouton image</strong>, ou choisissez <strong>Édition ▸ Insérer une image…</strong> (<code>⇧⌘A</code>).</li></ul>
+<p>Shokonotes copie le fichier dans un dossier <code>images</code> à côté de la note et écrit le lien pour vous, par exemple <code>![vacances](images/vacances.jpg)</code>. Votre fichier d'origine n'est jamais déplacé. Les noms sont conservés, avec un numéro si le nom existe déjà. <code>⌘Z</code> retire le lien ; le fichier copié reste sur le disque.</p>
+<p>Le dossier <code>images</code> n'apparaît pas dans la barre latérale tant qu'il ne contient pas de notes. Si vous déplacez une note dans un autre dossier, déplacez aussi son dossier <code>images</code> : les liens sont relatifs à la note.</p>
+<p>Sur iPhone, le menu image à côté de <strong>Terminé</strong> propose la photothèque, l'app Fichiers ou le collage d'une image. Les photos sont converties en JPEG et leur position est supprimée.</p>
+<h3>Tableaux</h3>
+<p>Écrire un tableau à la main est pénible : Shokonotes a donc un petit éditeur de grille.</p>
+<ul><li>Placez le curseur dans un tableau : un bouton <strong>Modifier le tableau</strong> apparaît au-dessus. <code>⌥⌘T</code> et <strong>Édition ▸ Modifier le tableau…</strong> font de même.</li><li><strong>Édition ▸ Insérer un tableau…</strong> en commence un nouveau.</li><li>Modifiez les cellules, réglez l'alignement de chaque colonne, ajoutez ou supprimez des lignes et des colonnes. Le Markdown qui sera écrit s'affiche sous la grille.</li><li>Rien ne change dans la note avant de cliquer <strong>Appliquer</strong>, et <code>⌘Z</code> annule le tableau entier d'un coup.</li></ul>
+<p>Le tableau est écrit aligné, pour rester lisible en texte brut. Un tableau dans une liste ou une citation, ou dont une ligne a plus de cellules que l'en-tête, ne peut pas être modifié sans risque : l'éditeur dit pourquoi, et vous pouvez le modifier en texte.</p>
+<p>Sur iPhone, la même grille s'ouvre depuis le menu tableau de l'en-tête de l'éditeur, à côté du menu image.</p>
+<h2 id="fr-iphone-et-synchronisation">iPhone et synchronisation</h2>
+<p>Shokonotes n'a ni serveur ni compte. Vos notes voyagent comme n'importe quel fichier : par le service de synchronisation que vous utilisez déjà.</p>
+<h3>Avec iCloud Drive</h3>
+<ol><li>Sur le Mac, gardez votre dossier de notes <strong>dans iCloud Drive</strong>.</li><li>Sur l'iPhone, ouvrez Shokonotes, touchez <strong>Choisir un dossier…</strong> et choisissez le même dossier dans iCloud Drive.</li></ol>
+<p>L'app iPhone est une compagne : recherche, lecture, et modification d'une note avec le bouton <strong>Modifier</strong>. Le bouton de rédaction capture une note dans Inbox. Dans Safari ou toute autre app, <strong>Partager ▸ Shokonotes</strong> enregistre une page ou du texte comme note.</p>
+<h3>Autres outils de synchronisation</h3>
+<p>Nextcloud, Syncthing, un dépôt Git, ou rien du tout : sur le Mac, n'importe quel dossier convient. Sur l'iPhone, seuls les dossiers d'iCloud Drive sont pris en charge.</p>
+<h3>Bon à savoir</h3>
+<ul><li>Renommez et classez sur le Mac ; le téléphone sert à capturer et à lire.</li><li>Un dossier que vous n'avez pas mis dans iCloud Drive reste sur votre Mac.</li></ul>
+<h2 id="fr-personnaliser">Personnaliser</h2>
+<p>Ouvrez les <strong>Réglages</strong> avec <code>⌘,</code>.</p>
+<ul><li><strong>Général</strong> — quel éditeur ouvre les notes, raccourcis locaux et globaux, ce que fait la fermeture de la fenêtre (par défaut l'app continue de tourner avec ses raccourcis globaux), listage des notes des sous-dossiers.</li><li><strong>Stockage</strong> — le dossier de notes, le nom des notes sans titre, la gestion des conflits iCloud, l'extension des fichiers.</li><li><strong>Apparence</strong> — la barre latérale peut être translucide comme le reste de macOS, ou opaque.</li><li><strong>Aperçu</strong> — thème, police et taille de la note mise en forme et de l'éditeur.</li></ul>
+<h3>Si la fenêtre a disparu</h3>
+<p>Fermer la fenêtre ne quitte pas Shokonotes. Faites-la revenir avec <strong>Fenêtre ▸ Bibliothèque</strong> (<code>⌘0</code>), un clic sur l'icône du Dock, ou le raccourci global <code>⌃⌥⌘S</code>, qui affiche et masque la bibliothèque depuis n'importe quelle app. Quittez avec <code>⌘Q</code>.</p>
+<h3>Imprimer, exporter, partager</h3>
+<p>Les trois boutons en haut à droite d'une note l'impriment, l'exportent en PDF identique à l'aperçu, ou partagent le fichier de la note (Mail, Messages, AirDrop).</p>
+<h2 id="fr-titres-et-texte">Titres et texte</h2>
+<p>Le Markdown est du texte brut avec quelques symboles. Cette note montre les symboles <strong>et</strong> ce qu'ils produisent. Ouvrez-la pour écrire (Entrée) et comparez.</p>
+<h3>Titres</h3>
+<p>Commencez une ligne par un à six <code>#</code> :</p>
+<pre><code class="language-markdown"># Titre
+## Section
+### Sous-section</code></pre>
+<h3>Emphase</h3>
+<p>Écrivez en <em>italique</em> avec une étoile, en <strong>gras</strong> avec deux, en <strong><em>les deux</em></strong> avec trois, et <del>barré</del> avec deux tildes.</p>
+<pre><code class="language-markdown">*italique*  **gras**  ***les deux***  ~~barré~~</code></pre>
+<h3>Paragraphes</h3>
+<p>Une ligne vide commence un nouveau paragraphe. Un simple retour à la ligne au milieu d'un paragraphe n'est qu'une espace.</p>
+<h3>Citations</h3>
+<blockquote><p>Une ligne qui commence par <code>&gt;</code> est une citation. Elle peut courir sur plusieurs lignes.</p></blockquote>
+<h3>Un trait horizontal</h3>
+<p>Trois tirets sur une ligne seule tracent un trait :</p>
+<hr>
+<h2 id="fr-listes-et-taches">Listes et tâches</h2>
+<h3>Puces</h3>
+<ul><li>Commencez la ligne par <code>-</code></li><li>Ou par <code>*</code><ul><li>Décalez de deux espaces pour imbriquer</li></ul></li></ul>
+<h3>Numérotées</h3>
+<ol><li>Premier</li><li>Deuxième</li><li>Troisième</li></ol>
+<p>Dans l'éditeur, Entrée à la fin d'un élément de liste ouvre le suivant. Entrée sur un élément vide termine la liste.</p>
+<h3>Tâches</h3>
+<ul><li><span class="task">☑</span> Une tâche terminée</li><li><span class="task">☐</span> Une tâche à faire</li><li><span class="task">☐</span> Une autre</li></ul>
+<pre><code class="language-markdown">- [x] fait
+- [ ] à faire</code></pre>
+<h2 id="fr-liens-et-images">Liens et images</h2>
+<h3>Liens</h3>
+<p>Le texte entre crochets, puis l'adresse entre parenthèses :</p>
+<pre><code class="language-markdown">[Shokonotes](https://shokonotes.jcbaptiste.com)</code></pre>
+<p><a href="https://shokonotes.jcbaptiste.com">Shokonotes</a></p>
+<p>Une adresse seule entre chevrons marche aussi : <a href="https://example.com">https://example.com</a></p>
+<h3>Images</h3>
+<p>Pareil, avec un point d'exclamation devant. Le chemin est relatif à la note : gardez les images à côté de vos notes.</p>
+<pre><code class="language-markdown">![Une courte description](images/photo.jpg)</code></pre>
+<h3>Pourquoi des chemins relatifs</h3>
+<p>Vos notes sont de simples fichiers. Si vous déplacez le dossier sur un autre ordinateur, les liens vers des fichiers qu'il contient continuent de marcher car ils ne disent jamais où se trouve le dossier.</p>
+<h2 id="fr-code">Code</h2>
+<p>Mettez un mot entre <code>accents graves</code> pour du code en ligne.</p>
+<p>Pour plusieurs lignes, entourez-les de trois accents graves et nommez le langage. L'aperçu les colore, et l'éditeur aussi.</p>
+<pre><code class="language-swift">func saluer(_ nom: String) -&gt; String {
+    "Bonjour, \(nom) !"
+}</code></pre>
+<pre><code class="language-python">def saluer(nom):
+    return f"Bonjour, {nom} !"</code></pre>
+<pre><code class="language-bash">echo "Bonjour" &gt; bonjour.txt</code></pre>
+<p>Survolez un bloc dans l'aperçu pour copier son contenu d'un clic.</p>
+<h2 id="fr-tableaux-et-citations">Tableaux et citations</h2>
+<h3>Tableaux</h3>
+<p>Séparez les colonnes par <code>|</code> et tracez la ligne d'en-tête avec des tirets :</p>
+<pre><code class="language-markdown">| Fruit   | Couleur | Saison    |
+| ------- | ------- | --------- |
+| Pomme   | Rouge   | Automne   |
+| Cerise  | Rouge   | Été       |</code></pre>
+<table><thead><tr><th>Fruit</th><th>Couleur</th><th>Saison</th></tr></thead><tbody><tr><td>Pomme</td><td>Rouge</td><td>Automne</td></tr><tr><td>Cerise</td><td>Rouge</td><td>Été</td></tr></tbody></table>
+<p>Ajoutez deux-points pour aligner : <code>:---</code> à gauche, <code>:---:</code> centré, <code>---:</code> à droite.</p>
+<h3>Citations imbriquées</h3>
+<blockquote><p>Une citation</p>
+<blockquote><p>dans une citation</p></blockquote></blockquote>
+<h3>L'en-tête d'une note</h3>
+<p>Tout en haut d'un fichier, trois tirets peuvent ouvrir un petit en-tête, le <em>front matter</em>. Shokonotes s'en sert pour le titre, les étiquettes et la date de création :</p>
+<pre><code class="language-yaml">---
+title: "Ma note"
+tags: [idée, travail]
+created: 2026-10-08
+---</code></pre>
+</section>
+  </main>
+  <footer class="site">
+    © 2026 Jean-Christophe Baptiste · <a href="support.html">Support</a> · <a href="press.html">Press</a> · <a href="privacy.html">Privacy</a>
+  </footer>
+</body>
+</html>
