@@ -32,8 +32,8 @@ header.site {
   display: flex; align-items: center; justify-content: space-between;
   padding-top: 22px; padding-bottom: 22px;
 }
-header.site .brand { display: flex; align-items: center; gap: 10px; color: var(--fg); font-weight: 600; }
-header.site .brand img { width: 32px; height: 32px; border-radius: 8px; }
+header.site .brand { display: flex; align-items: center; gap: 12px; color: var(--fg); font-weight: 700; font-size: 1.3rem; letter-spacing: -0.01em; }
+header.site .brand img { width: 44px; height: 44px; border-radius: 10px; }
 header.site nav a { margin-left: 18px; color: var(--muted); }
 header.site nav a.current { color: var(--fg); }
 h1 { font-size: 40px; line-height: 1.15; letter-spacing: -0.02em; margin: 28px 0 10px; }
@@ -90,3 +90,8 @@ figure.narrow { max-width: 520px; margin-left: auto; margin-right: auto; }
 .press-grid figure { margin: 0; }
 .press-grid img { border: 1px solid var(--line); background: var(--card); }
 @media (max-width: 640px) { .press-grid { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  header.site { flex-wrap: wrap; row-gap: 10px; }
+  header.site nav { width: 100%; }
+  header.site nav > a:first-child { margin-left: 0; }
+}
