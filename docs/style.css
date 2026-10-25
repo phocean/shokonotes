@@ -30,10 +30,13 @@ a:hover { text-decoration: underline; }
 header.site, main, footer.site { max-width: 760px; margin: 0 auto; padding: 0 20px; }
 header.site {
   display: flex; align-items: center; justify-content: space-between;
-  padding-top: 22px; padding-bottom: 22px;
+  padding-top: 14px; padding-bottom: 14px;
+  /* Stays at the top while scrolling; the background bleeds to the window edges. */
+  position: sticky; top: 0; z-index: 10;
+  background: var(--bg); box-shadow: 0 0 0 100vmax var(--bg), 0 1px 0 100vmax var(--line); clip-path: inset(0 -100vmax -1px);
 }
-header.site .brand { display: flex; align-items: center; gap: 12px; color: var(--fg); font-weight: 700; font-size: 1.3rem; letter-spacing: -0.01em; }
-header.site .brand img { width: 44px; height: 44px; border-radius: 10px; }
+header.site .brand { display: flex; align-items: center; gap: 12px; color: var(--fg); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.01em; }
+header.site .brand img { width: 52px; height: 52px; border-radius: 12px; }
 header.site nav a { margin-left: 18px; color: var(--muted); }
 header.site nav a.current { color: var(--fg); }
 h1 { font-size: 40px; line-height: 1.15; letter-spacing: -0.02em; margin: 28px 0 10px; }
@@ -94,4 +97,12 @@ figure.narrow { max-width: 520px; margin-left: auto; margin-right: auto; }
   header.site { flex-wrap: wrap; row-gap: 10px; }
   header.site nav { width: 100%; }
   header.site nav > a:first-child { margin-left: 0; }
+}
+/* Anchors (manual table of contents) land below the sticky header. */
+html { scroll-padding-top: 96px; }
+@media (max-width: 640px) {
+  header.site { padding-top: 10px; padding-bottom: 10px; }
+  header.site .brand { font-size: 1.25rem; }
+  header.site .brand img { width: 40px; height: 40px; border-radius: 9px; }
+  html { scroll-padding-top: 120px; }
 }
